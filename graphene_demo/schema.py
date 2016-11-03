@@ -29,17 +29,12 @@ class CurrentUserNode(DjangoObjectType):
   class Meta:
     model = get_user_model()
     interfaces = (graphene.relay.Node, )
-class UserNode(DjangoObjectType):
-  class Meta:
-    model = get_user_model()
-    interfaces = (graphene.relay.Node, )
 #"""
 
 class Query(graphene.ObjectType):
   #current_user = graphene.relay.Node.Field(CurrentUserNode)
   animal = graphene.relay.Node.Field(AnimalNode)
-  #user = graphene.relay.Node.Field(UserNode)
-  all_animals = graphene.List(AnimalNode)
+  all_animals = DjangoFilterConnectionField(AnimalNode)
   my_animals = DjangoFilterConnectionField(AnimalNode)
   def resolve_my_animals(self,args,context,info):
     if context.user.is_authenticated():
