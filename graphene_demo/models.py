@@ -4,3 +4,4 @@ class Animal(models.Model):
   name = models.CharField(max_length=32)
   genus = models.CharField(max_length=32)
   is_domesticated = models.BooleanField(default=False)
+  __unicode__ = lambda self: self.name
